@@ -74,10 +74,10 @@
 
     .main-layout {
       width: 100%;
-      max-width: 1040px;
+      max-width: 1120px;
       margin: auto;
       display: grid;
-      grid-template-columns: 1.38fr 0.85fr;
+      grid-template-columns: 1.15fr 1fr;
       gap: 22px;
       align-items: start;
     }
@@ -86,7 +86,7 @@
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 24px;
-      padding: 26px 24px;
+      padding: 24px 22px;
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
       backdrop-filter: blur(12px);
     }
@@ -151,7 +151,6 @@
       line-height: 1;
     }
 
-    /* 오늘 지나간 교시 / 누적 집중 요약 바 */
     .stats-strip {
       display: inline-flex;
       align-items: center;
@@ -183,7 +182,6 @@
       display: inline;
     }
 
-    /* 점심 / 저녁 / 23시 종료 강조 메시지 */
     .banner-box {
       display: none;
       border-radius: 18px;
@@ -239,7 +237,7 @@
 
     /* 큰 시계 표시 영역 */
     .timer-display {
-      font-size: clamp(4.8rem, 11vw, 7.6rem);
+      font-size: clamp(4.6rem, 10vw, 7.2rem);
       font-weight: 900;
       font-variant-numeric: tabular-nums;
       letter-spacing: -3px;
@@ -249,7 +247,6 @@
       text-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
     }
 
-    /* 휴식 시간 안내 문구 박스 (매시 50~60분 자동 노출) */
     .break-tip-box {
       display: none;
       align-items: center;
@@ -327,7 +324,7 @@
       background: #2563eb;
       color: #fff;
       flex: 2;
-      min-width: 170px;
+      min-width: 165px;
     }
 
     .btn-sound.active {
@@ -339,10 +336,9 @@
       background: rgba(255, 255, 255, 0.12);
       color: var(--text-main);
       flex: 1;
-      min-width: 96px;
+      min-width: 92px;
     }
 
-    /* 접이식 맞춤 설정 패널 (소리 종류 / 테마 / 개인 D-day) */
     .settings-panel {
       display: none;
       margin-top: 16px;
@@ -432,64 +428,80 @@
       color: var(--text-sub);
     }
 
-    /* 우측(모바일 하단) 시간표 */
-    .schedule-card h2 {
-      font-size: 1.05rem;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    /* 우측(모바일 하단) 3열 시간표 테이블 */
+    .schedule-card {
+      padding: 18px 18px;
     }
 
-    .schedule-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    .table-wrap {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(0, 0, 0, 0.24);
     }
 
-    .schedule-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(0, 0, 0, 0.22);
-      border: 1px solid transparent;
-      font-size: 0.88rem;
-      transition: all 0.25s ease;
+    .timetable-grid {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      text-align: center;
     }
 
-    .schedule-item.active {
-      border-color: var(--accent-study);
-      background: var(--accent-study-soft);
-    }
-
-    .schedule-item.meal-row.active {
-      border-color: rgba(251, 191, 36, 0.65);
-      background: rgba(251, 191, 36, 0.14);
-    }
-
-    .schedule-item.night-row.active {
-      border-color: rgba(167, 139, 250, 0.65);
-      background: rgba(167, 139, 250, 0.14);
-    }
-
-    .slot-time {
-      color: var(--text-sub);
-      font-variant-numeric: tabular-nums;
-      font-weight: 500;
-    }
-
-    .slot-label {
+    .timetable-grid thead th {
+      background: rgba(255, 255, 255, 0.09);
+      color: var(--text-main);
       font-weight: 700;
-      text-align: right;
+      padding: 9px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .timetable-grid tbody td {
+      padding: 7px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+      line-height: 1.3;
+      transition: background-color 0.25s ease;
+    }
+
+    .timetable-grid tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .timetable-grid tbody tr.meal-row td {
+      background: rgba(251, 191, 36, 0.12);
+      color: #fde68a;
+      font-weight: 700;
+    }
+
+    .timetable-grid tbody tr.night-row td {
+      color: #ddd6fe;
+    }
+
+    .timetable-grid tbody tr.active td {
+      background: var(--accent-study-soft);
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: inset 0 1px 0 var(--accent-study), inset 0 -1px 0 var(--accent-study);
+    }
+
+    .timetable-grid tbody tr.meal-row.active td {
+      background: rgba(251, 191, 36, 0.26);
+      color: #fef08a;
+      box-shadow: inset 0 1px 0 var(--accent-meal), inset 0 -1px 0 var(--accent-meal);
+    }
+
+    .timetable-grid tbody tr.night-row.active td {
+      background: rgba(167, 139, 250, 0.24);
+      color: #ede9fe;
+      box-shadow: inset 0 1px 0 var(--accent-night), inset 0 -1px 0 var(--accent-night);
     }
 
     /* 페이지 맨 아래 09:00 ~ 23:00 러너 트랙 */
     .runner-footer {
       width: 100%;
-      max-width: 1040px;
+      max-width: 1120px;
       margin: 22px auto 0;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-color);
@@ -590,18 +602,21 @@
       }
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: 880px) {
       .main-layout {
         grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 460px) {
+    @media (max-width: 480px) {
       .timer-display {
-        font-size: 4.8rem;
+        font-size: 4.5rem;
       }
       .banner-title {
-        font-size: 1.22rem;
+        font-size: 1.2rem;
+      }
+      .timetable-grid {
+        font-size: 0.78rem;
       }
     }
   </style>
@@ -695,38 +710,96 @@
       <div class="notice">※ 최초 1회 '소리 켜기'를 눌러야 정각/50분 알람이 울립니다.</div>
     </section>
 
-    <!-- 우측: 한눈에 보는 시간표 -->
+    <!-- 우측: 교시 / 시간 / 비고 3열 시간표 -->
     <aside class="card schedule-card">
-      <h2>
-        <span>🗓️ 오늘의 시간표</span>
-        <span style="font-size: 0.78rem; color: var(--text-sub); font-weight: 500;">50분 집중 / 10분 휴식</span>
-      </h2>
-      <ul class="schedule-list" id="scheduleList">
-        <li class="schedule-item" data-range="09-12">
-          <span class="slot-time">09:00 ~ 12:00</span>
-          <span class="slot-label">1~3교시 (50/10)</span>
-        </li>
-        <li class="schedule-item meal-row" data-range="12-13">
-          <span class="slot-time">12:00 ~ 13:00</span>
-          <span class="slot-label" style="color: var(--accent-meal);">🍱 점심 시간</span>
-        </li>
-        <li class="schedule-item" data-range="13-18">
-          <span class="slot-time">13:00 ~ 18:00</span>
-          <span class="slot-label">4~8교시 (50/10)</span>
-        </li>
-        <li class="schedule-item meal-row" data-range="18-19">
-          <span class="slot-time">18:00 ~ 19:00</span>
-          <span class="slot-label" style="color: var(--accent-meal);">🍽️ 저녁 시간</span>
-        </li>
-        <li class="schedule-item" data-range="19-23">
-          <span class="slot-time">19:00 ~ 23:00</span>
-          <span class="slot-label">9~12교시 (50/10)</span>
-        </li>
-        <li class="schedule-item night-row" data-range="23-09">
-          <span class="slot-time">23:00 ~ 09:00</span>
-          <span class="slot-label" style="color: var(--accent-night);">🌙 심야 13~22교시 (50/10)</span>
-        </li>
-      </ul>
+      <div class="table-wrap">
+        <table class="timetable-grid" id="timetableGrid">
+          <thead>
+            <tr>
+              <th>교시</th>
+              <th>시간</th>
+              <th>비고</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-slot="9">
+              <td>1교시</td>
+              <td>09:00 - 09:50 (50분)</td>
+              <td>쉬는 시간 10분</td>
+            </tr>
+            <tr data-slot="10">
+              <td>2교시</td>
+              <td>10:00 - 10:50 (50분)</td>
+              <td>쉬는 시간 10분</td>
+            </tr>
+            <tr data-slot="11">
+              <td>3교시</td>
+              <td>11:00 - 11:50 (50분)</td>
+              <td>쉬는 시간 10분</td>
+            </tr>
+            <tr class="meal-row" data-slot="12">
+              <td>점심시간</td>
+              <td>12:00 - 13:00 (60분)</td>
+              <td></td>
+            </tr>
+            <tr data-slot="13">
+              <td>4교시</td>
+              <td>13:00 - 13:50 (50분)</td>
+              <td>쉬는 시간 10분</td>
+            </tr>
+            <tr data-slot="14">
+              <td>5교시</td>
+              <td>14:00 - 14:50 (50분)</td>
+              <td>쉬는 시간 10분</td>
+            </tr>
+            <tr data-slot="15">
+              <td>6교시</td>
+              <td>15:00 - 15:50 (50분)</td>
+              <td>쉬는 시간 10분</td>
+            </tr>
+            <tr data-slot="16">
+              <td>7교시</td>
+              <td>16:00 - 16:50 (50분)</td>
+              <td>쉬는 시간 10분</td>
+            </tr>
+            <tr data-slot="17">
+              <td>8교시</td>
+              <td>17:00 - 17:50 (50분)</td>
+              <td>쉬는 시간 10분</td>
+            </tr>
+            <tr class="meal-row" data-slot="18">
+              <td>저녁시간</td>
+              <td>18:00 - 19:00 (60분)</td>
+              <td></td>
+            </tr>
+            <tr data-slot="19">
+              <td>9교시</td>
+              <td>19:00 - 19:50 (50분)</td>
+              <td>쉬는 시간 10분</td>
+            </tr>
+            <tr data-slot="20">
+              <td>10교시</td>
+              <td>20:00 - 20:50 (50분)</td>
+              <td>쉬는 시간 10분</td>
+            </tr>
+            <tr data-slot="21">
+              <td>11교시</td>
+              <td>21:00 - 21:50 (50분)</td>
+              <td>쉬는 시간 10분</td>
+            </tr>
+            <tr data-slot="22">
+              <td>12교시</td>
+              <td>22:00 - 22:50 (50분)</td>
+              <td>정규 종료 23:00</td>
+            </tr>
+            <tr class="night-row" data-slot="night">
+              <td>심야 자율</td>
+              <td>23:00 - 09:00 (13~22교시)</td>
+              <td>매시 50분 공부 / 10분<br />휴식</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </aside>
   </div>
 
@@ -795,7 +868,6 @@
     const ddayDateInput = document.getElementById("ddayDateInput");
     const clearDdayBtn = document.getElementById("clearDdayBtn");
 
-    // 저장된 설정 복원
     function applyRunnerChar(char) {
       currentRunnerChar = char;
       runnerAvatar.textContent = char;
@@ -833,7 +905,6 @@
     applyTheme(currentTheme);
     applySoundType(currentSoundType, false);
 
-    // D-day 초기화 및 업데이트
     ddayLabelInput.value = localStorage.getItem(STORAGE_KEYS.ddayLabel) || "";
     ddayDateInput.value = localStorage.getItem(STORAGE_KEYS.ddayDate) || "";
 
@@ -871,7 +942,6 @@
       updateDdayBadge();
     });
 
-    // 이벤트 연결
     document.querySelectorAll(".char-btn").forEach((btn) => {
       btn.addEventListener("click", () => applyRunnerChar(btn.dataset.char));
     });
@@ -901,17 +971,15 @@
       return hour >= 23 || hour < 9;
     }
 
-    // 3가지 알람 소리 + 심야(23:00~09:00) 자동 볼륨 축소
     function playAlertSound(phase) {
       if (!soundEnabled) return;
       initAudio();
 
       const nowHour = new Date().getHours();
-      const volumeScale = isNightHour(nowHour) ? 0.3 : 1.0; // 심야 시간대 볼륨 30%로 자동 축소
+      const volumeScale = isNightHour(nowHour) ? 0.3 : 1.0;
       const now = audioCtx.currentTime;
 
       if (currentSoundType === "beep") {
-        // 짧은 비프음 (2회)
         const count = phase === "study" ? 2 : 1;
         for (let i = 0; i < count; i++) {
           const osc = audioCtx.createOscillator();
@@ -932,7 +1000,6 @@
       }
 
       if (currentSoundType === "melody") {
-        // 부드러운 멜로디 (4음 아르페지오)
         const notes =
           phase === "study"
             ? [523.25, 659.25, 783.99, 1046.5]
@@ -955,7 +1022,6 @@
         return;
       }
 
-      // 기본 차임벨
       const notes =
         phase === "study"
           ? [523.25, 659.25, 783.99]
@@ -1010,7 +1076,6 @@
       return null;
     }
 
-    // 09:00 기준 오늘 완료된 교시 및 누적 집중 시간 계산
     function updateDailyStats(h, m) {
       const periodProgressText = document.getElementById("periodProgressText");
       const accumulatedText = document.getElementById("accumulatedText");
@@ -1018,7 +1083,6 @@
 
       nightVolTag.classList.toggle("show", isNightHour(h));
 
-      // 09:00부터 현재 시각까지 지나간 공부 시간(분) 계산
       const studyHours = [
         9, 10, 11,
         13, 14, 15, 16, 17,
@@ -1026,7 +1090,6 @@
         23, 0, 1, 2, 3, 4, 5, 6, 7, 8
       ];
 
-      // 하루 사이클(09:00 ~ 익일 08:59) 내 경과 인덱스
       const cycleIndex = h >= 9 ? h - 9 : h + 15;
       let completedPeriods = 0;
       let totalStudyMinutes = 0;
@@ -1039,7 +1102,6 @@
           completedPeriods += 1;
           totalStudyMinutes += 50;
         } else {
-          // 현재 진행 중인 시간대
           const currentMin = Math.min(50, m);
           totalStudyMinutes += currentMin;
           if (m >= 50) completedPeriods += 1;
@@ -1064,9 +1126,9 @@
       return String(num).padStart(2, "0");
     }
 
-    function highlightSchedule(rangeKey) {
-      document.querySelectorAll(".schedule-item").forEach((el) => {
-        el.classList.toggle("active", el.dataset.range === rangeKey);
+    function highlightTableRow(slotKey) {
+      document.querySelectorAll("#timetableGrid tbody tr").forEach((row) => {
+        row.classList.toggle("active", row.dataset.slot === slotKey);
       });
     }
 
@@ -1164,7 +1226,7 @@
         remainingSec = (59 - m) * 60 + (60 - s);
         totalSec = 3600;
 
-        highlightSchedule("12-13");
+        highlightTableRow("12");
         specialBanner.classList.remove("finish-banner");
         specialBanner.classList.add("show");
         bannerTitle.textContent = "🍱 지금은 점심시간입니다!";
@@ -1182,7 +1244,7 @@
         remainingSec = (59 - m) * 60 + (60 - s);
         totalSec = 3600;
 
-        highlightSchedule("18-19");
+        highlightTableRow("18");
         specialBanner.classList.remove("finish-banner");
         specialBanner.classList.add("show");
         bannerTitle.textContent = "🍽️ 지금은 저녁시간입니다!";
@@ -1199,10 +1261,11 @@
         const isNightSession = isNightHour(h);
         const nextHour = (h + 1) % 24;
 
-        if (h >= 9 && h < 12) highlightSchedule("09-12");
-        else if (h >= 13 && h < 18) highlightSchedule("13-18");
-        else if (h >= 19 && h < 23) highlightSchedule("19-23");
-        else highlightSchedule("23-09");
+        if (h >= 9 && h < 23) {
+          highlightTableRow(String(h));
+        } else {
+          highlightTableRow("night");
+        }
 
         if (m < 50) {
           stateKey = `study-${h}`;
