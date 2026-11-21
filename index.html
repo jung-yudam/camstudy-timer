@@ -9,17 +9,48 @@
       --bg-day: #111827;
       --bg-evening: #161529;
       --bg-night: #0d1021;
+      --bg-break: #11221c;
       --bg-meal: #261b0c;
-      --bg-finish: #11221e;
       --card-bg: rgba(255, 255, 255, 0.06);
       --border-color: rgba(255, 255, 255, 0.12);
       --text-main: #f8fafc;
       --text-sub: #94a3b8;
       --accent-study: #38bdf8;
+      --accent-study-soft: rgba(56, 189, 248, 0.16);
       --accent-break: #34d399;
       --accent-night: #a78bfa;
       --accent-meal: #fbbf24;
       --accent-finish: #2dd4bf;
+    }
+
+    /* 테마 1: 세이지 그린 (눈 편한 톤) */
+    body[data-theme="sage"] {
+      --bg-day: #111a17;
+      --bg-evening: #131e1b;
+      --bg-night: #0c1412;
+      --bg-break: #13261f;
+      --accent-study: #4ade80;
+      --accent-study-soft: rgba(74, 222, 128, 0.16);
+    }
+
+    /* 테마 2: 라벤더 미드나잇 */
+    body[data-theme="lavender"] {
+      --bg-day: #161426;
+      --bg-evening: #1b1730;
+      --bg-night: #0f0d1c;
+      --bg-break: #132224;
+      --accent-study: #c084fc;
+      --accent-study-soft: rgba(192, 132, 252, 0.16);
+    }
+
+    /* 테마 3: 웜 다크 (차분한 앰버 톤) */
+    body[data-theme="warm"] {
+      --bg-day: #1a1613;
+      --bg-evening: #1f1915;
+      --bg-night: #120f0d;
+      --bg-break: #16221b;
+      --accent-study: #fb923c;
+      --accent-study-soft: rgba(251, 146, 60, 0.16);
     }
 
     * {
@@ -36,17 +67,17 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 24px 20px 18px;
+      padding: 22px 20px 18px;
       transition: background-color 0.6s ease;
       overflow-x: hidden;
     }
 
     .main-layout {
       width: 100%;
-      max-width: 1020px;
+      max-width: 1040px;
       margin: auto;
       display: grid;
-      grid-template-columns: 1.35fr 0.85fr;
+      grid-template-columns: 1.38fr 0.85fr;
       gap: 22px;
       align-items: start;
     }
@@ -55,7 +86,7 @@
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 24px;
-      padding: 28px 24px;
+      padding: 26px 24px;
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
       backdrop-filter: blur(12px);
     }
@@ -68,40 +99,96 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .top-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .current-clock {
-      font-size: 1rem;
+      font-size: 0.98rem;
       color: var(--text-sub);
       font-variant-numeric: tabular-nums;
       font-weight: 600;
     }
 
+    .dday-badge {
+      display: none;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: rgba(251, 191, 36, 0.16);
+      border: 1px solid rgba(251, 191, 36, 0.35);
+      color: #fde68a;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .dday-badge.show {
+      display: inline-flex;
+    }
+
     .sky-indicator {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
+      gap: 7px;
+      padding: 6px 13px;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.08);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
     }
 
     .sky-icon {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       line-height: 1;
+    }
+
+    /* 오늘 지나간 교시 / 누적 집중 요약 바 */
+    .stats-strip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 6px 14px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.24);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      font-size: 0.84rem;
+      color: var(--text-sub);
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .stats-strip strong {
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .night-vol-tag {
+      display: none;
+      color: #c4b5fd;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .night-vol-tag.show {
+      display: inline;
     }
 
     /* 점심 / 저녁 / 23시 종료 강조 메시지 */
     .banner-box {
       display: none;
       border-radius: 18px;
-      padding: 18px 16px;
-      margin-bottom: 18px;
+      padding: 16px 16px;
+      margin-bottom: 16px;
       border: 1px solid rgba(251, 191, 36, 0.35);
       background: rgba(251, 191, 36, 0.14);
     }
@@ -116,7 +203,7 @@
     }
 
     .banner-title {
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       font-weight: 800;
       margin-bottom: 4px;
       color: var(--accent-meal);
@@ -127,7 +214,7 @@
     }
 
     .banner-sub {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: var(--text-main);
       opacity: 0.9;
     }
@@ -138,16 +225,16 @@
       border-radius: 999px;
       font-size: 1.02rem;
       font-weight: 700;
-      margin-bottom: 10px;
-      background: rgba(56, 189, 248, 0.16);
+      margin-bottom: 8px;
+      background: var(--accent-study-soft);
       color: var(--accent-study);
       transition: all 0.3s ease;
     }
 
     .session-info {
-      font-size: 1.04rem;
+      font-size: 1.02rem;
       color: var(--text-sub);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     /* 큰 시계 표시 영역 */
@@ -157,8 +244,8 @@
       font-variant-numeric: tabular-nums;
       letter-spacing: -3px;
       line-height: 1.02;
-      margin: 10px 0 24px;
-      padding: 10px 4px;
+      margin: 8px 0 22px;
+      padding: 8px 4px;
       text-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
     }
 
@@ -172,8 +259,8 @@
       border: 1px solid rgba(52, 211, 153, 0.35);
       border-radius: 14px;
       padding: 12px 16px;
-      margin-bottom: 20px;
-      font-size: 0.96rem;
+      margin-bottom: 18px;
+      font-size: 0.95rem;
       font-weight: 600;
       color: #a7f3d0;
       animation: fadeTip 0.4s ease;
@@ -205,7 +292,7 @@
       background: rgba(255, 255, 255, 0.1);
       border-radius: 999px;
       overflow: hidden;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .progress-bar {
@@ -217,16 +304,17 @@
 
     .controls {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       justify-content: center;
+      flex-wrap: wrap;
     }
 
     button {
       cursor: pointer;
       border: none;
       border-radius: 12px;
-      padding: 12px 16px;
-      font-size: 0.95rem;
+      padding: 11px 14px;
+      font-size: 0.92rem;
       font-weight: 600;
       transition: transform 0.1s ease, opacity 0.2s ease, background-color 0.2s ease;
     }
@@ -239,21 +327,108 @@
       background: #2563eb;
       color: #fff;
       flex: 2;
+      min-width: 170px;
     }
 
     .btn-sound.active {
       background: #059669;
     }
 
-    .btn-test {
+    .btn-test,
+    .btn-settings {
       background: rgba(255, 255, 255, 0.12);
       color: var(--text-main);
       flex: 1;
+      min-width: 96px;
+    }
+
+    /* 접이식 맞춤 설정 패널 (소리 종류 / 테마 / 개인 D-day) */
+    .settings-panel {
+      display: none;
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+    }
+
+    .settings-panel.open {
+      display: block;
+    }
+
+    .setting-group {
+      margin-bottom: 14px;
+    }
+
+    .setting-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .setting-title {
+      font-size: 0.82rem;
+      color: var(--text-sub);
+      font-weight: 700;
+      margin-bottom: 7px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chip-row {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .chip-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+      border-radius: 10px;
+      padding: 7px 11px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .chip-btn.selected {
+      background: var(--accent-study-soft);
+      border-color: var(--accent-study);
+      color: var(--accent-study);
+    }
+
+    .dday-inputs {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .dday-inputs input {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      padding: 7px 10px;
+      color: var(--text-main);
+      font-size: 0.84rem;
+      outline: none;
+    }
+
+    .dday-inputs input[type="text"] {
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .btn-clear-dday {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-sub);
+      padding: 7px 11px;
+      border-radius: 10px;
+      font-size: 0.8rem;
     }
 
     .notice {
       margin-top: 12px;
-      font-size: 0.8rem;
+      font-size: 0.79rem;
       color: var(--text-sub);
     }
 
@@ -286,8 +461,8 @@
     }
 
     .schedule-item.active {
-      border-color: rgba(56, 189, 248, 0.55);
-      background: rgba(56, 189, 248, 0.12);
+      border-color: var(--accent-study);
+      background: var(--accent-study-soft);
     }
 
     .schedule-item.meal-row.active {
@@ -314,8 +489,8 @@
     /* 페이지 맨 아래 09:00 ~ 23:00 러너 트랙 */
     .runner-footer {
       width: 100%;
-      max-width: 1020px;
-      margin: 24px auto 0;
+      max-width: 1040px;
+      margin: 22px auto 0;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-color);
       border-radius: 20px;
@@ -362,7 +537,7 @@
     }
 
     .char-btn.selected {
-      background: rgba(56, 189, 248, 0.22);
+      background: var(--accent-study-soft);
       border-color: var(--accent-study);
       transform: translateY(-1px);
     }
@@ -386,7 +561,7 @@
       bottom: 0;
       width: 0%;
       border-radius: 999px;
-      background: linear-gradient(90deg, rgba(56, 189, 248, 0.25), rgba(52, 211, 153, 0.35));
+      background: linear-gradient(90deg, var(--accent-study-soft), rgba(52, 211, 153, 0.35));
       transition: width 0.5s linear;
     }
 
@@ -436,11 +611,22 @@
     <!-- 좌측: 메인 타이머 카드 -->
     <section class="card timer-card">
       <div class="top-bar">
-        <div class="current-clock" id="currentClock">현재 시각 00:00:00</div>
+        <div class="top-left">
+          <div class="current-clock" id="currentClock">현재 시각 00:00:00</div>
+          <div class="dday-badge" id="ddayBadge"></div>
+        </div>
         <div class="sky-indicator" id="skyIndicator">
           <span class="sky-icon" id="skyIcon">☀️</span>
           <span id="skyText">낮 시간대</span>
         </div>
+      </div>
+
+      <!-- 오늘 지나간 교시 & 누적 집중 시간 요약 -->
+      <div class="stats-strip" id="statsStrip">
+        <span>오늘 진행: <strong id="periodProgressText">0 / 12교시</strong></span>
+        <span>·</span>
+        <span>누적 집중: <strong id="accumulatedText">0분</strong></span>
+        <span class="night-vol-tag" id="nightVolTag">· 🌙 심야 저음 모드</span>
       </div>
 
       <!-- 점심 / 저녁 / 23시 종료 강조 메시지 -->
@@ -466,7 +652,46 @@
       <div class="controls">
         <button class="btn-sound" id="soundToggleBtn">🔇 소리 켜기 (입장 시 클릭)</button>
         <button class="btn-test" id="testSoundBtn">🔔 테스트음</button>
+        <button class="btn-settings" id="settingsToggleBtn">⚙️ 맞춤 설정</button>
       </div>
+
+      <!-- 접이식 맞춤 설정 패널 -->
+      <div class="settings-panel" id="settingsPanel">
+        <div class="setting-group">
+          <div class="setting-title">
+            <span>🔔 알람 소리 종류</span>
+            <span style="font-weight: 500;">23:00~09:00 자동 저음 적용</span>
+          </div>
+          <div class="chip-row" id="soundTypePicker">
+            <button type="button" class="chip-btn selected" data-sound="chime">차임벨 (기본)</button>
+            <button type="button" class="chip-btn" data-sound="melody">부드러운 멜로디</button>
+            <button type="button" class="chip-btn" data-sound="beep">짧은 비프음</button>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <div class="setting-title"><span>🎨 배경 다크톤 · 포인트 컬러 테마</span></div>
+          <div class="chip-row" id="themePicker">
+            <button type="button" class="chip-btn selected" data-theme="default">오션 블루</button>
+            <button type="button" class="chip-btn" data-theme="sage">세이지 그린</button>
+            <button type="button" class="chip-btn" data-theme="lavender">라벤더</button>
+            <button type="button" class="chip-btn" data-theme="warm">웜 다크</button>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <div class="setting-title">
+            <span>📌 개인 D-day 표시 (내 기기에만 저장)</span>
+            <span style="font-weight: 500;">비워두면 숨김</span>
+          </div>
+          <div class="dday-inputs">
+            <input type="text" id="ddayLabelInput" maxlength="16" placeholder="일정 이름 (예: 시험)" />
+            <input type="date" id="ddayDateInput" />
+            <button type="button" class="btn-clear-dday" id="clearDdayBtn">숨기기</button>
+          </div>
+        </div>
+      </div>
+
       <div class="notice">※ 최초 1회 '소리 켜기'를 눌러야 정각/50분 알람이 울립니다.</div>
     </section>
 
@@ -531,7 +756,11 @@
 
   <script>
     const STORAGE_KEYS = {
-      char: "camstudy_runner_char_v1"
+      char: "camstudy_runner_char_v1",
+      soundType: "camstudy_sound_type_v1",
+      theme: "camstudy_theme_v1",
+      ddayLabel: "camstudy_dday_label_v1",
+      ddayDate: "camstudy_dday_date_v1"
     };
 
     const BREAK_TIPS = [
@@ -547,15 +776,26 @@
     let soundEnabled = false;
     let lastStateKey = null;
     let lastTipIndex = -1;
+
     let currentRunnerChar = localStorage.getItem(STORAGE_KEYS.char) || "🏃‍♀️";
+    let currentSoundType = localStorage.getItem(STORAGE_KEYS.soundType) || "chime";
+    let currentTheme = localStorage.getItem(STORAGE_KEYS.theme) || "default";
 
     const soundToggleBtn = document.getElementById("soundToggleBtn");
     const testSoundBtn = document.getElementById("testSoundBtn");
+    const settingsToggleBtn = document.getElementById("settingsToggleBtn");
+    const settingsPanel = document.getElementById("settingsPanel");
     const runnerAvatar = document.getElementById("runnerAvatar");
     const breakTipBox = document.getElementById("breakTipBox");
     const breakTipIcon = document.getElementById("breakTipIcon");
     const breakTipText = document.getElementById("breakTipText");
 
+    const ddayBadge = document.getElementById("ddayBadge");
+    const ddayLabelInput = document.getElementById("ddayLabelInput");
+    const ddayDateInput = document.getElementById("ddayDateInput");
+    const clearDdayBtn = document.getElementById("clearDdayBtn");
+
+    // 저장된 설정 복원
     function applyRunnerChar(char) {
       currentRunnerChar = char;
       runnerAvatar.textContent = char;
@@ -565,12 +805,87 @@
       });
     }
 
-    applyRunnerChar(currentRunnerChar);
-
-    document.querySelectorAll(".char-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        applyRunnerChar(btn.dataset.char);
+    function applyTheme(theme) {
+      currentTheme = theme;
+      document.body.dataset.theme = theme;
+      localStorage.setItem(STORAGE_KEYS.theme, theme);
+      document.querySelectorAll("#themePicker .chip-btn").forEach((btn) => {
+        btn.classList.toggle("selected", btn.dataset.theme === theme);
       });
+    }
+
+    function applySoundType(type, preview = false) {
+      currentSoundType = type;
+      localStorage.setItem(STORAGE_KEYS.soundType, type);
+      document.querySelectorAll("#soundTypePicker .chip-btn").forEach((btn) => {
+        btn.classList.toggle("selected", btn.dataset.sound === type);
+      });
+      if (preview) {
+        initAudio();
+        const prev = soundEnabled;
+        soundEnabled = true;
+        playAlertSound("study");
+        soundEnabled = prev;
+      }
+    }
+
+    applyRunnerChar(currentRunnerChar);
+    applyTheme(currentTheme);
+    applySoundType(currentSoundType, false);
+
+    // D-day 초기화 및 업데이트
+    ddayLabelInput.value = localStorage.getItem(STORAGE_KEYS.ddayLabel) || "";
+    ddayDateInput.value = localStorage.getItem(STORAGE_KEYS.ddayDate) || "";
+
+    function updateDdayBadge() {
+      const label = ddayLabelInput.value.trim();
+      const dateStr = ddayDateInput.value;
+      localStorage.setItem(STORAGE_KEYS.ddayLabel, label);
+      localStorage.setItem(STORAGE_KEYS.ddayDate, dateStr);
+
+      if (!dateStr) {
+        ddayBadge.classList.remove("show");
+        return;
+      }
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const [y, m, d] = dateStr.split("-").map(Number);
+      const target = new Date(y, m - 1, d);
+      const diffDays = Math.round((target - today) / (1000 * 60 * 60 * 24));
+
+      let dText = "";
+      if (diffDays > 0) dText = `D-${diffDays}`;
+      else if (diffDays === 0) dText = "D-DAY";
+      else dText = `D+${Math.abs(diffDays)}`;
+
+      ddayBadge.textContent = label ? `📌 ${label} ${dText}` : `📌 ${dText}`;
+      ddayBadge.classList.add("show");
+    }
+
+    ddayLabelInput.addEventListener("input", updateDdayBadge);
+    ddayDateInput.addEventListener("change", updateDdayBadge);
+    clearDdayBtn.addEventListener("click", () => {
+      ddayLabelInput.value = "";
+      ddayDateInput.value = "";
+      updateDdayBadge();
+    });
+
+    // 이벤트 연결
+    document.querySelectorAll(".char-btn").forEach((btn) => {
+      btn.addEventListener("click", () => applyRunnerChar(btn.dataset.char));
+    });
+
+    document.querySelectorAll("#soundTypePicker .chip-btn").forEach((btn) => {
+      btn.addEventListener("click", () => applySoundType(btn.dataset.sound, true));
+    });
+
+    document.querySelectorAll("#themePicker .chip-btn").forEach((btn) => {
+      btn.addEventListener("click", () => applyTheme(btn.dataset.theme));
+    });
+
+    settingsToggleBtn.addEventListener("click", () => {
+      settingsPanel.classList.toggle("open");
     });
 
     function initAudio() {
@@ -582,13 +897,67 @@
       }
     }
 
-    function playChime(type) {
+    function isNightHour(hour) {
+      return hour >= 23 || hour < 9;
+    }
+
+    // 3가지 알람 소리 + 심야(23:00~09:00) 자동 볼륨 축소
+    function playAlertSound(phase) {
       if (!soundEnabled) return;
       initAudio();
 
+      const nowHour = new Date().getHours();
+      const volumeScale = isNightHour(nowHour) ? 0.3 : 1.0; // 심야 시간대 볼륨 30%로 자동 축소
       const now = audioCtx.currentTime;
+
+      if (currentSoundType === "beep") {
+        // 짧은 비프음 (2회)
+        const count = phase === "study" ? 2 : 1;
+        for (let i = 0; i < count; i++) {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(phase === "study" ? 880 : 660, now + i * 0.22);
+
+          gain.gain.setValueAtTime(0.001, now + i * 0.22);
+          gain.gain.exponentialRampToValueAtTime(0.22 * volumeScale, now + i * 0.22 + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.22 + 0.16);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + i * 0.22);
+          osc.stop(now + i * 0.22 + 0.18);
+        }
+        return;
+      }
+
+      if (currentSoundType === "melody") {
+        // 부드러운 멜로디 (4음 아르페지오)
+        const notes =
+          phase === "study"
+            ? [523.25, 659.25, 783.99, 1046.5]
+            : [783.99, 659.25, 587.33, 523.25];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freq, now + idx * 0.16);
+
+          gain.gain.setValueAtTime(0.001, now + idx * 0.16);
+          gain.gain.exponentialRampToValueAtTime(0.2 * volumeScale, now + idx * 0.16 + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.16 + 0.85);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.16);
+          osc.stop(now + idx * 0.16 + 0.9);
+        });
+        return;
+      }
+
+      // 기본 차임벨
       const notes =
-        type === "study"
+        phase === "study"
           ? [523.25, 659.25, 783.99]
           : [783.99, 659.25, 523.25];
 
@@ -600,7 +969,7 @@
         osc.frequency.setValueAtTime(freq, now + idx * 0.18);
 
         gain.gain.setValueAtTime(0.001, now + idx * 0.18);
-        gain.gain.exponentialRampToValueAtTime(0.24, now + idx * 0.18 + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.24 * volumeScale, now + idx * 0.18 + 0.03);
         gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.18 + 0.7);
 
         osc.connect(gain);
@@ -617,7 +986,7 @@
       if (soundEnabled) {
         soundToggleBtn.textContent = "🔊 알람 소리 켜짐";
         soundToggleBtn.classList.add("active");
-        playChime("study");
+        playAlertSound("study");
       } else {
         soundToggleBtn.textContent = "🔇 소리 켜기 (입장 시 클릭)";
         soundToggleBtn.classList.remove("active");
@@ -628,7 +997,7 @@
       initAudio();
       const prev = soundEnabled;
       soundEnabled = true;
-      playChime("study");
+      playAlertSound("study");
       soundEnabled = prev;
     });
 
@@ -639,6 +1008,56 @@
       if (hour === 23) return 13;
       if (hour >= 0 && hour < 9) return hour + 14;
       return null;
+    }
+
+    // 09:00 기준 오늘 완료된 교시 및 누적 집중 시간 계산
+    function updateDailyStats(h, m) {
+      const periodProgressText = document.getElementById("periodProgressText");
+      const accumulatedText = document.getElementById("accumulatedText");
+      const nightVolTag = document.getElementById("nightVolTag");
+
+      nightVolTag.classList.toggle("show", isNightHour(h));
+
+      // 09:00부터 현재 시각까지 지나간 공부 시간(분) 계산
+      const studyHours = [
+        9, 10, 11,
+        13, 14, 15, 16, 17,
+        19, 20, 21, 22,
+        23, 0, 1, 2, 3, 4, 5, 6, 7, 8
+      ];
+
+      // 하루 사이클(09:00 ~ 익일 08:59) 내 경과 인덱스
+      const cycleIndex = h >= 9 ? h - 9 : h + 15;
+      let completedPeriods = 0;
+      let totalStudyMinutes = 0;
+
+      for (let i = 0; i <= cycleIndex; i++) {
+        const targetH = (9 + i) % 24;
+        if (!studyHours.includes(targetH)) continue;
+
+        if (i < cycleIndex) {
+          completedPeriods += 1;
+          totalStudyMinutes += 50;
+        } else {
+          // 현재 진행 중인 시간대
+          const currentMin = Math.min(50, m);
+          totalStudyMinutes += currentMin;
+          if (m >= 50) completedPeriods += 1;
+        }
+      }
+
+      const currentPeriod = getPeriodNumber(h);
+      if (h === 12 || h === 18) {
+        periodProgressText.textContent = `${completedPeriods} / 12교시 완료 (식사 중)`;
+      } else if (h >= 9 && h < 23) {
+        periodProgressText.textContent = `${currentPeriod}교시 진행 중 (${completedPeriods}교시 완료)`;
+      } else {
+        periodProgressText.textContent = `심야 ${currentPeriod}교시 (${completedPeriods}교시 누적)`;
+      }
+
+      const hrs = Math.floor(totalStudyMinutes / 60);
+      const mins = totalStudyMinutes % 60;
+      accumulatedText.textContent = hrs > 0 ? `${hrs}시간 ${mins}분` : `${mins}분`;
     }
 
     function pad(num) {
@@ -709,6 +1128,9 @@
       document.getElementById("currentClock").textContent =
         `현재 시각 ${pad(h)}:${pad(m)}:${pad(s)}`;
 
+      updateDdayBadge();
+      updateDailyStats(h, m);
+
       const isDaySky = h >= 6 && h < 18;
       document.getElementById("skyIcon").textContent = isDaySky ? "☀️" : "🌙";
       document.getElementById("skyText").textContent = isDaySky ? "낮 시간대" : "밤 시간대";
@@ -733,12 +1155,12 @@
       let stateKey = "";
       let remainingSec = 0;
       let totalSec = 0;
-      let soundType = "break";
+      let soundPhase = "break";
       let isBreakTime = false;
 
       if (h === 12) {
         stateKey = "lunch";
-        soundType = "meal";
+        soundPhase = "meal";
         remainingSec = (59 - m) * 60 + (60 - s);
         totalSec = 3600;
 
@@ -756,7 +1178,7 @@
         progressBar.style.backgroundColor = "var(--accent-meal)";
       } else if (h === 18) {
         stateKey = "dinner";
-        soundType = "meal";
+        soundPhase = "meal";
         remainingSec = (59 - m) * 60 + (60 - s);
         totalSec = 3600;
 
@@ -774,7 +1196,7 @@
         progressBar.style.backgroundColor = "var(--accent-meal)";
       } else {
         const period = getPeriodNumber(h);
-        const isNightSession = h >= 23 || h < 9;
+        const isNightSession = isNightHour(h);
         const nextHour = (h + 1) % 24;
 
         if (h >= 9 && h < 12) highlightSchedule("09-12");
@@ -784,7 +1206,7 @@
 
         if (m < 50) {
           stateKey = `study-${h}`;
-          soundType = "study";
+          soundPhase = "study";
           remainingSec = (49 - m) * 60 + (60 - s);
           totalSec = 50 * 60;
 
@@ -799,7 +1221,7 @@
             : `🔥 ${period}교시 집중 시간`;
           statusBadge.style.background = isNightSession
             ? "rgba(167, 139, 250, 0.16)"
-            : "rgba(56, 189, 248, 0.16)";
+            : "var(--accent-study-soft)";
           statusBadge.style.color = isNightSession
             ? "var(--accent-night)"
             : "var(--accent-study)";
@@ -810,11 +1232,11 @@
         } else {
           isBreakTime = true;
           stateKey = `break-${h}`;
-          soundType = "break";
+          soundPhase = "break";
           remainingSec = (59 - m) * 60 + (60 - s);
           totalSec = 10 * 60;
 
-          document.body.style.backgroundColor = "#11221c";
+          document.body.style.backgroundColor = "var(--bg-break)";
           statusBadge.textContent = `☕ ${period}교시 종료 · 휴식 시간`;
           statusBadge.style.background = "rgba(52, 211, 153, 0.16)";
           statusBadge.style.color = "var(--accent-break)";
@@ -836,7 +1258,7 @@
       updateBreakTip(isBreakTime, m);
 
       if (lastStateKey !== null && lastStateKey !== stateKey) {
-        playChime(soundType);
+        playAlertSound(soundPhase);
       }
       lastStateKey = stateKey;
 
